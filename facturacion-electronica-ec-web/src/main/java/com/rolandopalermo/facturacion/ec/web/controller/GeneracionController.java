@@ -12,6 +12,7 @@ import com.rolandopalermo.facturacion.ec.bo.GeneradorBO;
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
 import com.rolandopalermo.facturacion.ec.dto.GeneradorRequestDTO;
 import com.rolandopalermo.facturacion.ec.dto.GeneradorResponseDTO;
+import com.rolandopalermo.facturacion.ec.modelo.DocumentoElectronico;
 import com.rolandopalermo.facturacion.ec.modelo.factura.Factura;
 import com.rolandopalermo.facturacion.ec.modelo.guia.GuiaRemision;
 import com.rolandopalermo.facturacion.ec.modelo.notacredito.NotaCredito;
@@ -24,82 +25,43 @@ public class GeneracionController {
 
 	@Autowired
 	private GeneradorBO generadorBO;
-	
+
 	@RequestMapping(value = "/factura", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public GeneradorResponseDTO generarFactura(@RequestBody GeneradorRequestDTO<Factura> request) {
-		GeneradorResponseDTO response = new GeneradorResponseDTO();
-		try {
-			response.setCodigo("0");
-			response.setData(generadorBO.generarXMLDocumentoElectronico(request.getRequest()));
-		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
-		}
-		return response;
+		return generarDocumentoElectronico(request.getRequest());
 	}
-	
+
 	@RequestMapping(value = "/guia-remision", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public GeneradorResponseDTO generarGuiaRemision(@RequestBody GeneradorRequestDTO<GuiaRemision> request) {
-		GeneradorResponseDTO response = new GeneradorResponseDTO();
-		try {
-			response.setCodigo("0");
-			response.setData(generadorBO.generarXMLDocumentoElectronico(request.getRequest()));
-		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
-		}
-		return response;
+		return generarDocumentoElectronico(request.getRequest());
 	}
-	
+
 	@RequestMapping(value = "/nota-credito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public GeneradorResponseDTO generarNotaCredito(@RequestBody GeneradorRequestDTO<NotaCredito> request) {
-		GeneradorResponseDTO response = new GeneradorResponseDTO();
-		try {
-			response.setCodigo("0");
-			response.setData(generadorBO.generarXMLDocumentoElectronico(request.getRequest()));
-		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
-		}
-		return response;
+		return generarDocumentoElectronico(request.getRequest());
 	}
-	
+
 	@RequestMapping(value = "/nota-debito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public GeneradorResponseDTO generarNotaDebito(@RequestBody GeneradorRequestDTO<NotaDebito> request) {
-		GeneradorResponseDTO response = new GeneradorResponseDTO();
-		try {
-			response.setCodigo("0");
-			response.setData(generadorBO.generarXMLDocumentoElectronico(request.getRequest()));
-		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
-		}
-		return response;
+		return generarDocumentoElectronico(request.getRequest());
 	}
-	
+
 	@RequestMapping(value = "/comprobante-retencion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GeneradorResponseDTO generarComprobanteRetencion(@RequestBody GeneradorRequestDTO<ComprobanteRetencion> request) {
+	public GeneradorResponseDTO generarComprobanteRetencion(
+			@RequestBody GeneradorRequestDTO<ComprobanteRetencion> request) {
+		return generarDocumentoElectronico(request.getRequest());
+	}
+
+	private GeneradorResponseDTO generarDocumentoElectronico(DocumentoElectronico request) {
 		GeneradorResponseDTO response = new GeneradorResponseDTO();
 		try {
 			response.setCodigo("0");
-			response.setData(generadorBO.generarXMLDocumentoElectronico(request.getRequest()));
+			response.setData(generadorBO.generarXMLDocumentoElectronico(request));
 		} catch (NegocioException e) {
 			response.setCodigo("99");
 			response.setMensaje(e.getMessage());
@@ -109,5 +71,5 @@ public class GeneracionController {
 		}
 		return response;
 	}
-	
+
 }
