@@ -47,20 +47,13 @@ public abstract class GenericXMLSignature {
      * Almacén PKCS12 con el que se desea realizar la firma
      * </p>
      */
-//    public final static String PKCS12_RESOURCE = "/examples/usr0052.p12";
-    private String pkcs12_resource = "";
+    String pkcs12_resource = "";
     /**
      * <p>
      * Constraseña de acceso a la clave privada del usuario
      * </p>
      */
-    public String pkcs12_pasword = "";
-    /**
-     * <p>
-     * Directorio donde se almacenará el resultado de la firma
-     * </p>
-     */
-//    public final static String OUTPUT_DIRECTORY = "";
+    String pkcs12_pasword = "";
 
     /**
      * <p>

@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class GeneradorRequestDTO<T> extends AbstractBaseDTO {
+public class GeneradorRequestDTO<T> {
 
-	T request;
+	private T comprobante;
 
 }

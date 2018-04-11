@@ -10,11 +10,11 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
-import com.rolandopalermo.facturacion.ec.modelo.DocumentoElectronico;
+import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 
 public class ArchivoUtil {
 	
-	public static byte[] convertirXMLAByteArray(DocumentoElectronico doc) throws NegocioException {
+	public static byte[] convertirXMLAByteArray(ComprobanteElectronico doc) throws NegocioException {
 		try {
 			String nombreArchivo = doc.getInfoTributaria().getClaveAcceso() + UUID.randomUUID().toString();
 			File temp = File.createTempFile(nombreArchivo, ".xml");

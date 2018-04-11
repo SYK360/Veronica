@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.rolandopalermo.facturacion.ec.modelo.DocumentoElectronico;
+import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +24,7 @@ import lombok.Setter;
 @XmlRootElement(name = "notaCredito")
 @XmlType(propOrder = {
     "id", "version", "infoTributaria", "infoNotaCredito", "detalle", "campoAdicional"})
-public class NotaCredito extends DocumentoElectronico {
+public class NotaCredito extends ComprobanteElectronico {
 
     protected InfoNotaCredito infoNotaCredito;
     protected List<Detalle> detalle;

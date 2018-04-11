@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rolandopalermo.facturacion.ec.bo.GeneradorBO;
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
 import com.rolandopalermo.facturacion.ec.dto.GeneradorRequestDTO;
-import com.rolandopalermo.facturacion.ec.dto.GeneradorResponseDTO;
-import com.rolandopalermo.facturacion.ec.modelo.DocumentoElectronico;
+import com.rolandopalermo.facturacion.ec.dto.GenericResponseDTO;
+import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 import com.rolandopalermo.facturacion.ec.modelo.factura.Factura;
 import com.rolandopalermo.facturacion.ec.modelo.guia.GuiaRemision;
 import com.rolandopalermo.facturacion.ec.modelo.notacredito.NotaCredito;
@@ -28,40 +28,40 @@ public class GeneracionController {
 
 	@RequestMapping(value = "/factura", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GeneradorResponseDTO generarFactura(@RequestBody GeneradorRequestDTO<Factura> request) {
-		return generarDocumentoElectronico(request.getRequest());
+	public GenericResponseDTO generarFactura(@RequestBody GeneradorRequestDTO<Factura> request) {
+		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/guia-remision", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GeneradorResponseDTO generarGuiaRemision(@RequestBody GeneradorRequestDTO<GuiaRemision> request) {
-		return generarDocumentoElectronico(request.getRequest());
+	public GenericResponseDTO generarGuiaRemision(@RequestBody GeneradorRequestDTO<GuiaRemision> request) {
+		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/nota-credito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GeneradorResponseDTO generarNotaCredito(@RequestBody GeneradorRequestDTO<NotaCredito> request) {
-		return generarDocumentoElectronico(request.getRequest());
+	public GenericResponseDTO generarNotaCredito(@RequestBody GeneradorRequestDTO<NotaCredito> request) {
+		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/nota-debito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GeneradorResponseDTO generarNotaDebito(@RequestBody GeneradorRequestDTO<NotaDebito> request) {
-		return generarDocumentoElectronico(request.getRequest());
+	public GenericResponseDTO generarNotaDebito(@RequestBody GeneradorRequestDTO<NotaDebito> request) {
+		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/comprobante-retencion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GeneradorResponseDTO generarComprobanteRetencion(
+	public GenericResponseDTO generarComprobanteRetencion(
 			@RequestBody GeneradorRequestDTO<ComprobanteRetencion> request) {
-		return generarDocumentoElectronico(request.getRequest());
+		return generarDocumentoElectronico(request.getComprobante());
 	}
 
-	private GeneradorResponseDTO generarDocumentoElectronico(DocumentoElectronico request) {
-		GeneradorResponseDTO response = new GeneradorResponseDTO();
+	private GenericResponseDTO generarDocumentoElectronico(ComprobanteElectronico request) {
+		GenericResponseDTO response = new GenericResponseDTO();
 		try {
 			response.setCodigo("0");
-			response.setData(generadorBO.generarXMLDocumentoElectronico(request));
+			response.setContenido(generadorBO.generarXMLDocumentoElectronico(request));
 		} catch (NegocioException e) {
 			response.setCodigo("99");
 			response.setMensaje(e.getMessage());

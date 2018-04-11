@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.rolandopalermo.facturacion.ec.modelo.DocumentoElectronico;
+import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @XmlRootElement(name = "guiaRemision")
 @XmlType(propOrder = { "id", "version", "infoTributaria", "infoGuiaRemision", "destinatario", "campoAdicional" })
-public class GuiaRemision extends DocumentoElectronico {
+public class GuiaRemision extends ComprobanteElectronico {
 
 	protected InfoGuiaRemision infoGuiaRemision;
 	private List<Destinatario> destinatario;

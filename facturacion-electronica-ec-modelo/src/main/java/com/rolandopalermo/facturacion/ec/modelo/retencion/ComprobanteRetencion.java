@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.rolandopalermo.facturacion.ec.modelo.DocumentoElectronico;
+import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import lombok.Setter;
 @Setter
 @XmlRootElement(name = "comprobanteRetencion")
 @XmlType(propOrder = { "id", "version", "infoTributaria", "infoCompRetencion", "impuesto", "campoAdicional" })
-public class ComprobanteRetencion extends DocumentoElectronico {
+public class ComprobanteRetencion extends ComprobanteElectronico {
 
 	protected InfoCompRetencion infoCompRetencion;
 	private List<Impuesto> impuesto;
