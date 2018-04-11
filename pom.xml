@@ -23,6 +23,8 @@
 		<module>facturacion-electronica-ec-common</module>
 		<module>facturacion-electronica-ec-web</module>
 		<module>facturacion-electronica-ec-soap</module>
+		<module>facturacion-electronica-ec-dto</module>
+		<module>facturacion-electronica-ec-bo</module>
 	</modules>
 	<dependencies>
 		<dependency>
@@ -37,8 +39,28 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-<!-- 			<version>4.11</version> -->
+			<!-- <version>4.11</version> -->
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+<!-- 			<version>2.9.4</version> -->
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+<!-- 			<version>2.9.4</version> -->
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+<!-- 			<version>2.9.4</version> -->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.rolandopalermo.facturacion.ec.common.helper.MarshallerHelper;
 import com.rolandopalermo.facturacion.ec.common.sri.ClaveDeAcceso;
+import com.rolandopalermo.facturacion.ec.common.util.MarshallerUtil;
 import com.rolandopalermo.facturacion.ec.modelo.CampoAdicional;
 import com.rolandopalermo.facturacion.ec.modelo.Impuesto;
 import com.rolandopalermo.facturacion.ec.modelo.InfoTributaria;
@@ -112,8 +112,7 @@ public class GeneracionTest {
 		factura.setId("comprobante");
 		factura.setVersion("1.0.0");
 		// --
-		MarshallerHelper marshaller = new MarshallerHelper();
-		marshaller.marshal(factura, "factura-dummy.xml");
+		MarshallerUtil.marshall(factura, "factura-dummy.xml");
 	}
 
 }

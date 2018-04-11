@@ -24,12 +24,6 @@ public class FirmadorHelper extends GenericXMLSignature {
 
     private String rutaDocumentoAFirmar;
     private String rutaDocumentoFirmado;
-//    private String rutaArchivoFirma;
-
-//    public FirmadorHelper(String rutaDocumentoAFirmar, String rutaDocumentoFirmado) {
-//        this.rutaDocumentoAFirmar = rutaDocumentoAFirmar;
-//        this.rutaDocumentoFirmado = rutaDocumentoFirmado;
-//    }
 
     @Override
     protected DataToSign createDataToSign() throws NegocioException {

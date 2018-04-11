@@ -1,2 +1,2 @@
 com\rolandopalermo\facturacion\ec\web\FactElectApplication.class
-com\rolandopalermo\facturacion\ec\web\controller\TestController.class
+com\rolandopalermo\facturacion\ec\web\controller\GeneracionController.class
