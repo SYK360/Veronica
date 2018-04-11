@@ -1,0 +1,8 @@
+com\rolandopalermo\facturacion\ec\modelo\factura\InfoFactura.class
+com\rolandopalermo\facturacion\ec\modelo\factura\TotalImpuesto.class
+com\rolandopalermo\facturacion\ec\modelo\InfoTributaria.class
+com\rolandopalermo\facturacion\ec\modelo\CampoAdicional.class
+com\rolandopalermo\facturacion\ec\modelo\factura\FacturaDetalle.class
+com\rolandopalermo\facturacion\ec\modelo\DetAdicional.class
+com\rolandopalermo\facturacion\ec\modelo\factura\Factura.class
+com\rolandopalermo\facturacion\ec\modelo\Impuesto.class

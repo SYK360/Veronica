@@ -1,0 +1,6 @@
+com\rolandopalermo\facturacion\ec\common\sri\ClaveDeAcceso.class
+com\rolandopalermo\facturacion\ec\common\sri\GenericXMLSignature.class
+com\rolandopalermo\facturacion\ec\common\sri\PassStoreKS.class
+com\rolandopalermo\facturacion\ec\common\helper\FirmadorHelper.class
+com\rolandopalermo\facturacion\ec\common\helper\MarshallerHelper.class
+com\rolandopalermo\facturacion\ec\common\exception\NegocioException.class
