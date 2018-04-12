@@ -16,7 +16,7 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
 ### API Resources
 
   - [POST /generacion/factura](#post-generacionfactura)
-  - [POST /generacion/guia-remision](#post-generacionguia-remision
+  - [POST /generacion/guia-remision](#post-generacionguia-remision)
   - [POST /generacion/nota-credito](#post-generacionnota-credito)
   - [POST /generacion/nota-debito](#post-generacionnota-debito)
   - [POST /generacion/comprobante-retencion](#post-generacioncomprobante-retencion)
