@@ -1,7 +1,7 @@
 # Verónica REST API
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Verónica REST API](#veronica-rest-api)
+- [Veronica REST API](#veronica-rest-api)
 	- [Preamble](#preamble)
 	- [Request & Response Examples](#request--response-examples)
 	- [Documentation history](#documentation-history)
@@ -28,6 +28,21 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
   - [POST /sri/emitir/nota-credito](#post-sri-emitir-nota-credito)
   - [POST /sri/emitir/nota-debito](#post-sri-emitir-nota-debito)
   - [POST /sri/emitir/comprobante-retencion](#post-sri-emitir-comprobante-retencion)
+
+### POST /generacion/factura
+### POST /generacion/factura
+### POST /generacion/guia-remision
+### POST /generacion/nota-credito
+### POST /generacion/nota-debito
+### POST /generacion/comprobante-retencion
+### POST /firma/comprobante-electronico
+### POST /sri/enviar
+### POST /sri/autorizar
+### POST /sri/emitir/factura
+### POST /sri/emitir/guia-remision
+### POST /sri/emitir/nota-credito
+### POST /sri/emitir/nota-debito
+### POST /sri/emitir/comprobante-retencion
   
 ## Documentation history
 
