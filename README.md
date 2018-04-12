@@ -3,7 +3,7 @@
 
 - [Veronica REST API](#veronica-rest-api)
 	- [Preamble](#preamble)
-	- [Startup Settings] (#startup-settings)
+	- [Startup Settings](#startup-settings)
 	- [Request & Response Examples](#request--response-examples)
 	- [Documentation history](#documentation-history)
 	- [Authors](#authors)
