@@ -5,7 +5,7 @@
 	- [Preamble](#preamble)
 	- [Request & Response Examples](#request--response-examples)
 	- [Documentation history](#documentation-history)
-	- [Autores](#autores)
+	- [Authors](#authors)
 
 <!-- /TOC -->
 ## Preamble
@@ -17,7 +17,7 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
 
 - V1: 2018-04-12, first draft.
 
-## Autores
+## Authors
 
 | [![](https://avatars1.githubusercontent.com/u/11875482?v=4&s=80)](https://github.com/rolandopalermo) |
 |-|
