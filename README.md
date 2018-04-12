@@ -16,10 +16,18 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
 ### API Resources
 
   - [POST /generacion/factura](#post-generacion-factura)
-  - [POST /generacion/guia-remision](#post-guia-remision)
-  - [POST /generacion/nota-credito](#post-nota-credito)
-  - [POST /generacion/nota-debito](#post-nota-debito)
-  - [POST /generacion/comprobante-retencion](#post-comprobante-retencion)
+  - [POST /generacion/guia-remision](#post-generacion-guia-remision)
+  - [POST /generacion/nota-credito](#post-generacion-nota-credito)
+  - [POST /generacion/nota-debito](#post-generacion-nota-debito)
+  - [POST /generacion/comprobante-retencion](#post-generacion-comprobante-retencion)
+  - [POST /firma/comprobante-electronico](#post-firma-comprobante-electronico)
+  - [POST /sri/enviar](#post-firma-comprobante-electronico)
+  - [POST /sri/autorizar](#post-firma-comprobante-electronico)
+  - [POST /sri/emitir/factura](#post-sri-emitir-factura)
+  - [POST /sri/emitir/guia-remision](#post-sri-emitir-guia-remision)
+  - [POST /sri/emitir/nota-credito](#post-sri-emitir-nota-credito)
+  - [POST /sri/emitir/nota-debito](#post-sri-emitir-nota-debito)
+  - [POST /sri/emitir/comprobante-retencion](#post-sri-emitir-comprobante-retencion)
   
 ## Documentation history
 
