@@ -10,7 +10,7 @@
 
 <!-- /TOC -->
 ## Preámbulo
-La API REST Verónica es un conjunto de servicios Rest que permite emitir comprobantes electrónicos siguiendo la normativa ecuatoriana impuesta por el Servicio de Rentas Internas.
+La API REST Verónica es un conjunto de servicios Rest que brindan una capa de abstracción a través de la cual se facilita emitir comprobantes electrónicos siguiendo la normativa ecuatoriana impuesta por el Servicio de Rentas Internas.
 
 ## Autores
 
