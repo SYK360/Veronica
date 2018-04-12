@@ -1,4 +1,17 @@
-# Veronica REST API
+<h1 align="center">
+  <br>
+  <a href="#"><img src="https://raw.githubusercontent.com/rolandopalermo/ride2pdf/master/site/img/ride2pdf_logo.png" alt="Markdownify" width="300"></a>
+  <br>
+  Veronica REST API
+  <br>
+</h1>
+
+<h4 align="center">E-Invoicing Rest API for the integration with "Servicio de Rentas Internas" Web services 🇪🇨.</h4>
+
+<p align="center">
+  <a href="https://www.paypal.me/ride2pdf" target="_blank"><img alt="PayPal Donate" src="http://ionicabizau.github.io/badges/paypal.svg"></a>
+</p>
+
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Veronica REST API](#veronica-rest-api)
