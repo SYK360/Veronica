@@ -14,7 +14,10 @@
 
 ## Startup Settings
 If you want to make modifications to `Veronica`, you must configure your Maven repository appropriately, making sure to use the following instructions:
-1. You first need to go to the `Veronica`’s directory and after that, you have to move to additional_libs directory.
+1. You first need to go to the `Veronica`’s directory and after that, you have to move to additional_libs directory. For Linux, Windows or Mac use the command:
+```bash
+$ cd additional_libs
+```
 2. As second step, you must install all the JAR files from additional_libs to your the local repository using the following commands:
 ```bash
 mvn install:install-file -Dfile=jss-4.2.5.jar -DgroupId=org.mozilla -DartifactId=jss -Dversion=4.2.5 -Dpackaging=jar
