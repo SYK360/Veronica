@@ -2,7 +2,7 @@
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Verónica REST API](#veronica-rest-api)
-	- [Preámbulo](#preambulo)
+	- [Preámbulo](#preámbulo)
 	- [API overview](#api-overview)
 	- [Result types](#result-types)
 	- [Documentation history](#documentation-history)
