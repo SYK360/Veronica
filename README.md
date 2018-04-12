@@ -30,7 +30,18 @@ mvn install:install-file -Dfile=MITyCLibTSA-1.0.4.jar -DgroupId=es.mityc.javasig
 mvn install:install-file -Dfile=MITyCLibXADES-1.0.4.jar -DgroupId=es.mityc.javasign -DartifactId=xades -Dversion=1.0.4 -Dpackaging=jar
 mvn install:install-file -Dfile=xmlsec-1.4.2-ADSI-1.0.jar -DgroupId=org.apache.xmlsec-adsi -DartifactId=xmlsec-adsi -Dversion=1.4.2 -Dpackaging=jar
 ```
-
+3.- Use the next command to move to resources  folder.
+```bash
+$ cd facturacion-electronica-ec-web\src\main\resources
+```
+Change the data properties with appropriate values, according with your configuration.
+```text
+pkcs12.ruta.certificado=D:\\Privado\\certificado.p12
+pkcs12.password.certificado=MAte2910
+#
+sri.wsdl.recepcion=https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl
+sri.wsdl.autorizacion=https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl
+```
 ## Request & Response Examples
 
 ### API Resources
