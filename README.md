@@ -37,7 +37,7 @@ $ cd facturacion-electronica-ec-web\src\main\resources
 Change the data properties with appropriate values, according with your configuration.
 ```text
 pkcs12.ruta.certificado=D:\\Privado\\certificado.p12
-pkcs12.password.certificado=MAte2910
+pkcs12.password.certificado=########
 #
 sri.wsdl.recepcion=https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl
 sri.wsdl.autorizacion=https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl
