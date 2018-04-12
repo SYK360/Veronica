@@ -1,4 +1,4 @@
-# Verónica REST API
+# Veronica REST API
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Veronica REST API](#veronica-rest-api)
