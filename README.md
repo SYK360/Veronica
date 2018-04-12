@@ -3,13 +3,15 @@
 
 - [Verónica REST API](#veronica-rest-api)
 	- [Preamble](#preamble)
-	- [Request & Response Examples]
+	- [Request & Response Examples](#request--response-examples)
 	- [Documentation history](#documentation-history)
 	- [Autores](#autores)
 
 <!-- /TOC -->
 ## Preamble
 Veronica REST API is a set of RESTful web services that provide an abstraction layer which allows for easy issue of electronic invoicing, according with the Ecuadorian regulations imposed by the "Servicio de Rentas Internas".
+
+## Request & Response Examples
 
 ## Autores
 
