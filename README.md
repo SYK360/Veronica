@@ -2,15 +2,17 @@
 <!-- TOC depthFrom:1 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Verónica REST API](#veronica-rest-api)
-	- [Preamble](#preamble)
+	- [Preámbulo](#preambulo)
 	- [API overview](#api-overview)
 	- [Result types](#result-types)
 	- [Documentation history](#documentation-history)
-	- [Authors](#authors)
+	- [Autores](#authors)
 
 <!-- /TOC -->
+## Preámbulo
+La API REST Verónica es un conjunto de servicios Rest que permite emitir comprobantes electrónicos siguiendo la normativa ecuatoriana impuesta por el Servicio de Rentas Internas.
 
-## Authors
+## Autores
 
 | [![](https://avatars1.githubusercontent.com/u/11875482?v=4&s=80)](https://github.com/rolandopalermo) |
 |-|
