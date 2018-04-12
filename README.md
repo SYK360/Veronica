@@ -34,81 +34,81 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
 Example: http://localhost:8080/generacion/factura
 
 Request body:
-{
-	"comprobante": {
-		"id": "comprobante",
-		"version": "1.0.0",
-		"infoTributaria": {
-			"ambiente": "1",
-			"tipoEmision": "1",
-			"razonSocial": "ROLANDOPALERMO CONSULTING CIA. LTDA.",
-			"nombreComercial": "RP Consulting",
-			"ruc": "1791261151001",
-			"claveAcceso": "1004201801179126115100110010010000001170000308514",
-			"codDoc": "01",
-			"estab": "001",
-			"ptoEmi": "001",
-			"secuencial": "000000117",
-			"dirMatriz": "Cdla. Urdesa Central - Calle Cedros #108 y Víctor Emilio Estrada"
-		},
-		"campoAdicional": [{
-			"value": "LOS PERALES Y AV. ELOY ALFARO",
-			"nombre": "Dirección"
-		}, {
-			"value": "2123123",
-			"nombre": "Teléfono"
-		}, {
-			"value": "gfeguiguren@sri.gob.ec",
-			"nombre": "Email"
-		}],
-		"infoFactura": {
-			"fechaEmision": "10/04/2018",
-			"dirEstablecimiento": "KM 2.5 Av. Juan Tanca Marengo S/N y Av. A. Freire",
-			"contribuyenteEspecial": "000",
-			"obligadoContabilidad": "SI",
-			"tipoIdentificacionComprador": "04",
-			"guiaRemision": null,
-			"razonSocialComprador": "HIVIMAR S.A.",
-			"identificacionComprador": "0990129185001",
-			"totalSinImpuestos": 6316.80,
-			"totalDescuento": 0.00,
-			"totalImpuesto": [{
-				"codigo": "2",
-				"codigoPorcentaje": "2",
-				"baseImponible": 6316.80,
-				"tarifa": 12.00,
-				"valor": 758.02
+	{
+		"comprobante": {
+			"id": "comprobante",
+			"version": "1.0.0",
+			"infoTributaria": {
+				"ambiente": "1",
+				"tipoEmision": "1",
+				"razonSocial": "ROLANDOPALERMO CONSULTING CIA. LTDA.",
+				"nombreComercial": "RP Consulting",
+				"ruc": "1791261151001",
+				"claveAcceso": "1004201801179126115100110010010000001170000308514",
+				"codDoc": "01",
+				"estab": "001",
+				"ptoEmi": "001",
+				"secuencial": "000000117",
+				"dirMatriz": "Cdla. Urdesa Central - Calle Cedros #108 y Víctor Emilio Estrada"
+			},
+			"campoAdicional": [{
+				"value": "LOS PERALES Y AV. ELOY ALFARO",
+				"nombre": "Dirección"
+			}, {
+				"value": "2123123",
+				"nombre": "Teléfono"
+			}, {
+				"value": "gfeguiguren@sri.gob.ec",
+				"nombre": "Email"
 			}],
-			"propina": 0.00,
-			"importeTotal": 7074.82,
-			"moneda": "DOLAR"
-		},
-		"detalle": [{
-			"codigoPrincipal": "001",
-			"codigoAuxiliar": "001",
-			"descripcion": "SERVICIO DE CONSULTORÍA",
-			"cantidad": 1.00,
-			"precioUnitario": 6316.80,
-			"descuento": 0.00,
-			"precioTotalSinImpuesto": 6316.80,
-			"detAdicional": null,
-			"impuesto": [{
-				"codigo": "2",
-				"codigoPorcentaje": "2",
-				"tarifa": 12.00,
-				"baseImponible": 6316.80,
-				"valor": 758.02
+			"infoFactura": {
+				"fechaEmision": "10/04/2018",
+				"dirEstablecimiento": "KM 2.5 Av. Juan Tanca Marengo S/N y Av. A. Freire",
+				"contribuyenteEspecial": "000",
+				"obligadoContabilidad": "SI",
+				"tipoIdentificacionComprador": "04",
+				"guiaRemision": null,
+				"razonSocialComprador": "HIVIMAR S.A.",
+				"identificacionComprador": "0990129185001",
+				"totalSinImpuestos": 6316.80,
+				"totalDescuento": 0.00,
+				"totalImpuesto": [{
+					"codigo": "2",
+					"codigoPorcentaje": "2",
+					"baseImponible": 6316.80,
+					"tarifa": 12.00,
+					"valor": 758.02
+				}],
+				"propina": 0.00,
+				"importeTotal": 7074.82,
+				"moneda": "DOLAR"
+			},
+			"detalle": [{
+				"codigoPrincipal": "001",
+				"codigoAuxiliar": "001",
+				"descripcion": "SERVICIO DE CONSULTORÍA",
+				"cantidad": 1.00,
+				"precioUnitario": 6316.80,
+				"descuento": 0.00,
+				"precioTotalSinImpuesto": 6316.80,
+				"detAdicional": null,
+				"impuesto": [{
+					"codigo": "2",
+					"codigoPorcentaje": "2",
+					"tarifa": 12.00,
+					"baseImponible": 6316.80,
+					"valor": 758.02
+				}]
 			}]
-		}]
+		}
 	}
-}
 
 Response body:
-{
-    "codigo": "0",
-    "mensaje": null,
-    "contenido": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/..."
-}
+	{
+		"codigo": "0",
+		"mensaje": null,
+		"contenido": "PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/..."
+	}
 
 ### POST /generacion/guia-remision
 
