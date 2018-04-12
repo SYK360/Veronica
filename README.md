@@ -15,21 +15,20 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
 
 ### API Resources
 
-  - [POST /generacion/factura](#post-generacion-factura)
-  - [POST /generacion/guia-remision](#post-generacion-guia-remision)
-  - [POST /generacion/nota-credito](#post-generacion-nota-credito)
-  - [POST /generacion/nota-debito](#post-generacion-nota-debito)
-  - [POST /generacion/comprobante-retencion](#post-generacion-comprobante-retencion)
-  - [POST /firma/comprobante-electronico](#post-firma-comprobante-electronico)
-  - [POST /sri/enviar](#post-firma-comprobante-electronico)
-  - [POST /sri/autorizar](#post-firma-comprobante-electronico)
-  - [POST /sri/emitir/factura](#post-sri-emitir-factura)
-  - [POST /sri/emitir/guia-remision](#post-sri-emitir-guia-remision)
-  - [POST /sri/emitir/nota-credito](#post-sri-emitir-nota-credito)
-  - [POST /sri/emitir/nota-debito](#post-sri-emitir-nota-debito)
-  - [POST /sri/emitir/comprobante-retencion](#post-sri-emitir-comprobante-retencion)
+  - [POST /generacion/factura](#post-generacionfactura)
+  - [POST /generacion/guia-remision](#post-generacionguia-remision
+  - [POST /generacion/nota-credito](#post-generacionnota-credito)
+  - [POST /generacion/nota-debito](#post-generacionnota-debito)
+  - [POST /generacion/comprobante-retencion](#post-generacioncomprobante-retencion)
+  - [POST /firma/comprobante-electronico](#post-firmacomprobante-electronico)
+  - [POST /sri/enviar](#post-srienviar)
+  - [POST /sri/autorizar](#post-sriautorizar)
+  - [POST /sri/emitir/factura](#post-sriemitirfactura)
+  - [POST /sri/emitir/guia-remision](#post-sriemitirguia-remision)
+  - [POST /sri/emitir/nota-credito](#post-sriemitirnota-credito)
+  - [POST /sri/emitir/nota-debito](#post-sriemitirnota-debito)
+  - [POST /sri/emitir/comprobante-retencion](#post-sriemitircomprobante-retencion)
 
-### POST /generacion/factura
 ### POST /generacion/factura
 ### POST /generacion/guia-remision
 ### POST /generacion/nota-credito
