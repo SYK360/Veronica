@@ -3,18 +3,19 @@
 
 - [Veronica REST API](#veronica-rest-api)
 	- [Preamble](#preamble)
+	- [Startup Settings] (#startup-settings)
 	- [Request & Response Examples](#request--response-examples)
 	- [Documentation history](#documentation-history)
 	- [Authors](#authors)
 
 <!-- /TOC -->
 ## Preamble
-Veronica REST API is a set of RESTful web services that provide an abstraction layer which allows for easy issue of electronic invoicing, according with the Ecuadorian regulations imposed by the "Servicio de Rentas Internas".
+`Veronica REST API` is a set of RESTful web services that provide an abstraction layer which allows for easy issue of electronic invoicing, according with the Ecuadorian regulations imposed by the "Servicio de Rentas Internas".
 
 ## Startup Settings
-If you want to make modifications to Veronica, you must configure your Maven repository appropriately, making sure to use the following instructions:
-1. 
-2. 
+If you want to make modifications to `Veronica`, you must configure your Maven repository appropriately, making sure to use the following instructions:
+1. You first need to go to the `Veronica`’s directory and after that, you have to move to additional_libs directory.
+2. As second step, you must install all the JAR files from additional_libs to your the local repository use the following commands:
 ```bash
 mvn install:install-file -Dfile=jss-4.2.5.jar -DgroupId=org.mozilla -DartifactId=jss -Dversion=4.2.5 -Dpackaging=jar
 mvn install:install-file -Dfile=MITyCLibAPI-1.0.4.jar -DgroupId=es.mityc.javasign -DartifactId=api -Dversion=1.0.4 -Dpackaging=jar
