@@ -13,6 +13,10 @@ Veronica REST API is a set of RESTful web services that provide an abstraction l
 
 ## Request & Response Examples
 
+## Documentation history
+
+- V1: 2018-04-12, first draft.
+
 ## Autores
 
 | [![](https://avatars1.githubusercontent.com/u/11875482?v=4&s=80)](https://github.com/rolandopalermo) |
