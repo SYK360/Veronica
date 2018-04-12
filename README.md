@@ -34,7 +34,7 @@ mvn install:install-file -Dfile=xmlsec-1.4.2-ADSI-1.0.jar -DgroupId=org.apache.x
 ```bash
 $ cd facturacion-electronica-ec-web\src\main\resources
 ```
-Change the data properties with appropriate values, according with your configuration.
+Change the `data.properties` content with appropriate values, according with your configuration.
 ```text
 pkcs12.ruta.certificado=D:\\Privado\\certificado.p12
 pkcs12.password.certificado=########
