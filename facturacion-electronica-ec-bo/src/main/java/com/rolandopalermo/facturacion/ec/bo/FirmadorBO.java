@@ -37,11 +37,11 @@ public class FirmadorBO {
 			String rutaArchivoXMLFirmado = UUID.randomUUID().toString();
 			File tempFirmado = File.createTempFile(rutaArchivoXML, ".xml");
 			rutaArchivoXMLFirmado = tempFirmado.getAbsolutePath();
-			// 3.- Guardar datos en archivo xml
+			// 2.- Guardar datos en archivo xml
 			try (FileOutputStream fos = new FileOutputStream(rutaArchivoXML)) {
 				fos.write(comprobanteElectronico);
 			}
-			// 2.- Firmar el archivo xml creado temporalmente
+			// 3.- Firmar el archivo xml creado temporalmente
 			Firmador firmador = new Firmador(rutaArchivoXML, rutaArchivoXMLFirmado, rutaArchivoPkcs12,
 					claveArchivopkcs12);
 			firmador.firmar();
