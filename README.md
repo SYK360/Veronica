@@ -18,7 +18,7 @@ If you want to make modifications to `Veronica`, you must configure your Maven r
 ```bash
 $ cd additional_libs
 ```
-2. As second step, you must install all the JAR files from additional_libs to your the local repository using the following commands:
+2. As second step, you must install all the JAR files from additional_libs to the local Maven repository using the following commands:
 ```bash
 mvn install:install-file -Dfile=jss-4.2.5.jar -DgroupId=org.mozilla -DartifactId=jss -Dversion=4.2.5 -Dpackaging=jar
 mvn install:install-file -Dfile=MITyCLibAPI-1.0.4.jar -DgroupId=es.mityc.javasign -DartifactId=api -Dversion=1.0.4 -Dpackaging=jar
