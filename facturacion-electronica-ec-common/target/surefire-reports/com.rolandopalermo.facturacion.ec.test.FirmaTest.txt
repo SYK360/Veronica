@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.rolandopalermo.facturacion.ec.test.FirmaTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.81 sec - in com.rolandopalermo.facturacion.ec.test.FirmaTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.779 sec - in com.rolandopalermo.facturacion.ec.test.FirmaTest

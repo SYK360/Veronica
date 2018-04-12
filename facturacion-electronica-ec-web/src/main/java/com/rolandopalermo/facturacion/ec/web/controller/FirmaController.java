@@ -22,8 +22,8 @@ public class FirmaController {
 
 	@RequestMapping(value = "/comprobante-electronico", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GenericResponseDTO firmarComprobanteElectronico(@RequestBody FirmadorRequestDTO request) {
-		GenericResponseDTO response = new GenericResponseDTO();
+	public GenericResponseDTO<byte[]> firmarComprobanteElectronico(@RequestBody FirmadorRequestDTO request) {
+		GenericResponseDTO<byte[]> response = new GenericResponseDTO<byte[]>();
 		try {
 			response.setCodigo("0");
 			response.setContenido(firmadorBO.firmarComprobanteElectronico(request.getContenidoXML()));

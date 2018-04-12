@@ -28,37 +28,37 @@ public class GeneracionController {
 
 	@RequestMapping(value = "/factura", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GenericResponseDTO generarFactura(@RequestBody GeneradorRequestDTO<Factura> request) {
+	public GenericResponseDTO<byte[]> generarFactura(@RequestBody GeneradorRequestDTO<Factura> request) {
 		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/guia-remision", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GenericResponseDTO generarGuiaRemision(@RequestBody GeneradorRequestDTO<GuiaRemision> request) {
+	public GenericResponseDTO<byte[]> generarGuiaRemision(@RequestBody GeneradorRequestDTO<GuiaRemision> request) {
 		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/nota-credito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GenericResponseDTO generarNotaCredito(@RequestBody GeneradorRequestDTO<NotaCredito> request) {
+	public GenericResponseDTO<byte[]> generarNotaCredito(@RequestBody GeneradorRequestDTO<NotaCredito> request) {
 		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/nota-debito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GenericResponseDTO generarNotaDebito(@RequestBody GeneradorRequestDTO<NotaDebito> request) {
+	public GenericResponseDTO<byte[]> generarNotaDebito(@RequestBody GeneradorRequestDTO<NotaDebito> request) {
 		return generarDocumentoElectronico(request.getComprobante());
 	}
 
 	@RequestMapping(value = "/comprobante-retencion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public GenericResponseDTO generarComprobanteRetencion(
+	public GenericResponseDTO<byte[]> generarComprobanteRetencion(
 			@RequestBody GeneradorRequestDTO<ComprobanteRetencion> request) {
 		return generarDocumentoElectronico(request.getComprobante());
 	}
 
-	private GenericResponseDTO generarDocumentoElectronico(ComprobanteElectronico request) {
-		GenericResponseDTO response = new GenericResponseDTO();
+	private GenericResponseDTO<byte[]> generarDocumentoElectronico(ComprobanteElectronico request) {
+		GenericResponseDTO<byte[]> response = new GenericResponseDTO<byte[]>();
 		try {
 			response.setCodigo("0");
 			response.setContenido(generadorBO.generarXMLDocumentoElectronico(request));

@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class GenericResponseDTO extends AbstractBaseDTO {
+public class GenericResponseDTO<T> extends AbstractBaseDTO {
 
-	private byte[] contenido;
+	private T contenido;
 
 }

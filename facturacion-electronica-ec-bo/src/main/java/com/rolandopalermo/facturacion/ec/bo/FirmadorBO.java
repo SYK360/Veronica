@@ -8,14 +8,12 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
 import com.rolandopalermo.facturacion.ec.common.sri.Firmador;
 
 @Service
-@PropertySource("classpath:data.properties")
 public class FirmadorBO {
 
 	@Value("${pkcs12.ruta.certificado}")
