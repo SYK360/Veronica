@@ -38,9 +38,12 @@ Change the `data.properties` content with appropriate values, according with you
 ```text
 pkcs12.ruta.certificado=D:\\Privado\\certificado.p12
 pkcs12.password.certificado=########
-#
+# For DEV environments
 sri.wsdl.recepcion=https://celcer.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl
 sri.wsdl.autorizacion=https://celcer.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl
+# For PRD environments
+# sri.wsdl.recepcion=https://cel.sri.gob.ec/comprobantes-electronicos-ws/RecepcionComprobantesOffline?wsdl
+# sri.wsdl.autorizacion=https://cel.sri.gob.ec/comprobantes-electronicos-ws/AutorizacionComprobantesOffline?wsdl
 ```
 ## Request & Response Examples
 
