@@ -8,7 +8,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>facturacion-electronica-ec-web</artifactId>
-
+	<properties>
+		<filter.src>${basedir}/..</filter.src>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>javax</groupId>

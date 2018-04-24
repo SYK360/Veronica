@@ -14,9 +14,18 @@
 	</parent>
 
 	<properties>
+		<env>dev</env>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<filter.src>${basedir}</filter.src>
 		<java.version>1.8</java.version>
+		<skipTests>true</skipTests>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.debug>false</maven.compiler.debug>
+		<maven.compiler.compilerVersion>${java.version}</maven.compiler.compilerVersion>
+		<maven-plugin-antrun.version>1.8</maven-plugin-antrun.version>
+		<maven-plugin-ant.version>2.4</maven-plugin-ant.version>
 	</properties>
 	<modules>
 		<module>facturacion-electronica-ec-modelo</module>
@@ -39,23 +48,19 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<!-- <version>4.11</version> -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-<!-- 			<version>2.9.4</version> -->
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-<!-- 			<version>2.9.4</version> -->
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-<!-- 			<version>2.9.4</version> -->
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -63,4 +68,41 @@
 			<version>3.0</version>
 		</dependency>
 	</dependencies>
+	<!-- Perfiles -->
+	<profiles>
+		<profile>
+			<id>development</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<properties>
+				<env>prd</env>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<filters>
+			<filter>${filter.src}/src/filters/filter-${env}.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<compilerArgs>
+						<arg>-parameters</arg>
+					</compilerArgs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

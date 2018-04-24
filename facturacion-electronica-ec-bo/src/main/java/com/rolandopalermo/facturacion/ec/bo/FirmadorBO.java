@@ -16,10 +16,10 @@ import com.rolandopalermo.facturacion.ec.common.sri.Firmador;
 @Service
 public class FirmadorBO {
 
-	@Value("${pkcs12.ruta.certificado}")
+	@Value("${pkcs12.certificado.ruta}")
 	private String rutaArchivoPkcs12;
 
-	@Value("${pkcs12.password.certificado}")
+	@Value("${pkcs12.certificado.clave}")
 	private String claveArchivopkcs12;
 
 	public byte[] firmarComprobanteElectronico(byte[] comprobanteElectronico) throws NegocioException {
