@@ -391,6 +391,7 @@ Example: http://localhost:8080/sri/emitir/comprobante-retencion
 ## Documentation history
 
 - V1: 2018-04-12, first draft.
+- V2: 2018-04-27, enable maven profiles.
 
 ## Authors
 
