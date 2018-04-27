@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class RecepcionRequestDTO {
 
-	private byte[] contenidoXML;
+	private byte[] contenido;
 	
 }

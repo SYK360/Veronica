@@ -1,4 +1,5 @@
-com\rolandopalermo\facturacion\ec\web\FactElectApplication.class
-com\rolandopalermo\facturacion\ec\web\controller\SriController.class
-com\rolandopalermo\facturacion\ec\web\controller\FirmaController.class
+com\rolandopalermo\facturacion\ec\handler\RestExceptionHandler.class
+com\rolandopalermo\facturacion\ec\web\controller\SRIController.class
 com\rolandopalermo\facturacion\ec\web\controller\GeneracionController.class
+com\rolandopalermo\facturacion\ec\web\FactElectApplication.class
+com\rolandopalermo\facturacion\ec\web\controller\FirmaController.class

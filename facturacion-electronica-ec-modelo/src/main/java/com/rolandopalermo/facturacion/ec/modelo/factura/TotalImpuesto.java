@@ -6,7 +6,10 @@ package com.rolandopalermo.facturacion.ec.modelo.factura;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlType;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +23,14 @@ import lombok.Setter;
 @XmlType(propOrder = { "codigo", "codigoPorcentaje", "baseImponible", "tarifa", "valor" })
 public class TotalImpuesto {
 
+	@NotEmpty
 	protected String codigo;
+	@NotEmpty
 	protected String codigoPorcentaje;
+	@NotNull
 	protected BigDecimal baseImponible;
 	protected BigDecimal tarifa;
+	@NotNull
 	protected BigDecimal valor;
 
 }

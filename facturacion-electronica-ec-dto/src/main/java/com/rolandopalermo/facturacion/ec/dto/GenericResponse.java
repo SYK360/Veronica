@@ -1,11 +1,13 @@
 package com.rolandopalermo.facturacion.ec.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
-public class GenericResponseDTO<T> extends AbstractBaseDTO {
+@Setter
+@AllArgsConstructor
+public class GenericResponse<T> {
 
 	private T contenido;
 

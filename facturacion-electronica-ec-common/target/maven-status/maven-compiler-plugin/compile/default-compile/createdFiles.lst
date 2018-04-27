@@ -1,8 +1,11 @@
+com\rolandopalermo\facturacion\ec\common\exception\InternalServerException.class
 com\rolandopalermo\facturacion\ec\common\sri\GenericXMLSignature.class
 com\rolandopalermo\facturacion\ec\common\util\MarshallerUtil.class
+com\rolandopalermo\facturacion\ec\common\exception\BadRequestException.class
 com\rolandopalermo\facturacion\ec\common\sri\ClaveDeAcceso.class
 com\rolandopalermo\facturacion\ec\common\sri\PassStoreKS.class
 com\rolandopalermo\facturacion\ec\common\sri\TipoAmbiente.class
 com\rolandopalermo\facturacion\ec\common\exception\NegocioException.class
+com\rolandopalermo\facturacion\ec\common\exception\ResourceNotFoundException.class
 com\rolandopalermo\facturacion\ec\common\sri\Firmador.class
 com\rolandopalermo\facturacion\ec\common\util\ArchivoUtil.class

@@ -3,8 +3,8 @@ package com.rolandopalermo.facturacion.ec.bo;
 import java.io.File;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
@@ -20,65 +20,60 @@ import recepcion.ws.sri.gob.ec.RespuestaSolicitud;
 @Service
 public class SriBO {
 
-	@Value("${sri.wsdl.recepcion}")
-	private String wsdlRecepcion;
-
-	@Value("${sri.wsdl.autorizacion}")
-	private String wsdlAutorizacion;
+	private static final Logger logger = Logger.getLogger(SriBO.class);
 
 	@Autowired
 	private FirmadorBO firmadorBO;
 
-	@Autowired
-	private SriBO sriBO;
-
-	public RespuestaSolicitud enviarComprobante(byte[] xml) throws NegocioException {
+	public RespuestaSolicitud enviarComprobante(byte[] xml, String wsdlRecepcion) throws NegocioException {
 		try {
 			EnvioComprobantesProxy proxy = new EnvioComprobantesProxy(wsdlRecepcion);
 			return proxy.enviarComprobante(xml);
-		} catch (NegocioException e) {
-			throw e;
 		} catch (Exception e) {
+			logger.error("enviarComprobante", e);
 			throw new NegocioException("No se pudo enviar el comprobante electrónico al SRI.");
 		}
 	}
 
-	public RespuestaComprobante autorizarComprobante(String claveAcceso) throws NegocioException {
+	public RespuestaComprobante autorizarComprobante(String claveAcceso, String wsdlAutorizacion)
+			throws NegocioException {
 		try {
 			AutorizacionComprobanteProxy proxy = new AutorizacionComprobanteProxy(wsdlAutorizacion);
 			return proxy.autorizacionIndividual(claveAcceso);
-		} catch (NegocioException e) {
-			throw e;
 		} catch (Exception e) {
+			logger.error("autorizarComprobante", e);
 			throw new NegocioException(
 					String.format("No se pudo autorizar el comprobante electrónico [%s].", claveAcceso));
 		}
 	}
 
-	public RespuestaComprobante emitirComprobante(ComprobanteElectronico comprobante) throws NegocioException {
+	public RespuestaComprobante emitirComprobante(ComprobanteElectronico comprobante, String rutaArchivoPkcs12,
+			String claveArchivopkcs12, String wsdlRecepcion, String wsdlAutorizacion) throws NegocioException {
 		try {
-			// 1.- Crear archivo temporal para el xml
+			// Actividad 1.- Crear archivo temporal para el xml
 			String rutaArchivoXML = UUID.randomUUID().toString();
 			File temp = File.createTempFile(rutaArchivoXML, ".xml");
 			rutaArchivoXML = temp.getAbsolutePath();
-			// 2.- Ejecutar Marshalling
+			// Actividad 2.- Ejecutar Marshalling
 			MarshallerUtil.marshall(comprobante, rutaArchivoXML);
-			// 3.- Firmar el archivo
-			byte[] xml = firmadorBO.firmarComprobanteElectronico(ArchivoUtil.convertirArchivoAByteArray(temp));
-			// 4.- Enviar a Recepción
-			RespuestaSolicitud respuestaSolicitud = sriBO.enviarComprobante(xml);
+			// Actividad 3.- Firmar el archivo
+			byte[] xml = firmadorBO.firmarComprobanteElectronico(ArchivoUtil.convertirArchivoAByteArray(temp),
+					rutaArchivoPkcs12, claveArchivopkcs12);
+			// Actividad 4.- Enviar a Recepción
+			RespuestaSolicitud respuestaSolicitud = enviarComprobante(xml, wsdlRecepcion);
 			if (respuestaSolicitud != null && respuestaSolicitud.getEstado() != null
 					&& respuestaSolicitud.getEstado().toUpperCase().compareTo("RECIBIDA") == 0) {
-				//5.- Autorizar comprobante
+				// 5.- Autorizar comprobante
 				String claveAcceso = comprobante.getInfoTributaria().getClaveAcceso();
-				RespuestaComprobante respuestaComprobante = sriBO.autorizarComprobante(claveAcceso);
+				RespuestaComprobante respuestaComprobante = autorizarComprobante(claveAcceso, wsdlAutorizacion);
+				if(!temp.delete()) {
+					throw new NegocioException("No se pudo eliminar el archivo temporal.");
+				}
 				return respuestaComprobante;
 			} else {
-				//loguear error
+				// loguear error
 				throw new NegocioException("No se pudo autorizar el comprobante electrónico.");
 			}
-		} catch (NegocioException e) {
-			throw e;
 		} catch (Exception e) {
 			throw new NegocioException("No se pudo autorizar el comprobante electrónico.");
 		}

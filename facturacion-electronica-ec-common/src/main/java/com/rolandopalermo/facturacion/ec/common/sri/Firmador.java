@@ -2,8 +2,6 @@ package com.rolandopalermo.facturacion.ec.common.sri;
 
 import org.w3c.dom.Document;
 
-import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
-
 import es.mityc.firmaJava.libreria.xades.DataToSign;
 import es.mityc.firmaJava.libreria.xades.EnumFormatoFirma;
 import es.mityc.firmaJava.libreria.xades.XAdESSchemas;
@@ -32,20 +30,16 @@ public class Firmador extends GenericXMLSignature {
 	}
 
 	@Override
-	protected DataToSign createDataToSign() throws NegocioException {
+	protected DataToSign createDataToSign() throws Exception {
 		DataToSign dataToSign = new DataToSign();
-		try {
-			dataToSign.setXadesFormat(EnumFormatoFirma.XAdES_BES);
-			dataToSign.setEsquema(XAdESSchemas.XAdES_132);
-			dataToSign.setXMLEncoding("UTF-8");
-			dataToSign.setEnveloped(true);
-			dataToSign.addObject(new ObjectToSign(new InternObjectToSign("comprobante"), "Documento de ejemplo", null,
-					"text/xml", null));
-			Document docToSign = getDocument(getRutaDocumentoAFirmar());
-			dataToSign.setDocument(docToSign);
-		} catch (Exception ex) {
-			throw new NegocioException("No se pudo firmar el documento XML.");
-		}
+		dataToSign.setXadesFormat(EnumFormatoFirma.XAdES_BES);
+		dataToSign.setEsquema(XAdESSchemas.XAdES_132);
+		dataToSign.setXMLEncoding("UTF-8");
+		dataToSign.setEnveloped(true);
+		dataToSign.addObject(new ObjectToSign(new InternObjectToSign("comprobante"), "Documento de ejemplo", null,
+				"text/xml", null));
+		Document docToSign = getDocument(getRutaDocumentoAFirmar());
+		dataToSign.setDocument(docToSign);
 		return dataToSign;
 	}
 
@@ -54,7 +48,7 @@ public class Firmador extends GenericXMLSignature {
 		return rutaDocumentoFirmado;
 	}
 
-	public void firmar() throws NegocioException {
+	public void firmar() throws Exception {
 		execute();
 	}
 

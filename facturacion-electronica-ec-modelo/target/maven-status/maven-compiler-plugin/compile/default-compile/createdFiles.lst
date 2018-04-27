@@ -18,6 +18,7 @@ com\rolandopalermo\facturacion\ec\modelo\ComprobanteElectronico.class
 com\rolandopalermo\facturacion\ec\modelo\retencion\ComprobanteRetencion.class
 com\rolandopalermo\facturacion\ec\modelo\notacredito\Detalle.class
 com\rolandopalermo\facturacion\ec\modelo\retencion\Impuesto.class
+com\rolandopalermo\facturacion\ec\modelo\factura\Pago.class
 com\rolandopalermo\facturacion\ec\modelo\notadebito\Detalle.class
 com\rolandopalermo\facturacion\ec\modelo\guia\GuiaRemision.class
 com\rolandopalermo\facturacion\ec\modelo\notacredito\Motivo.class

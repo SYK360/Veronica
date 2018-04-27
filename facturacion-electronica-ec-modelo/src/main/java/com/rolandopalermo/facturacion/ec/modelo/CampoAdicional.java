@@ -7,6 +7,8 @@ package com.rolandopalermo.facturacion.ec.modelo;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +20,9 @@ import lombok.Setter;
 @Setter
 public class CampoAdicional {
 
+	@NotEmpty
 	protected String value;
+	@NotEmpty
 	protected String nombre;
 
 	@XmlAttribute(name = "nombre")

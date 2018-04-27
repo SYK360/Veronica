@@ -9,27 +9,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
 import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 
 public class ArchivoUtil {
-	
-	public static byte[] convertirXMLAByteArray(ComprobanteElectronico doc) throws NegocioException {
-		try {
-			String nombreArchivo = doc.getInfoTributaria().getClaveAcceso() + UUID.randomUUID().toString();
-			File temp = File.createTempFile(nombreArchivo, ".xml");
-			nombreArchivo = temp.getAbsolutePath();
-			MarshallerUtil.marshall(doc, nombreArchivo);
-			Path path = Paths.get(nombreArchivo);
-			byte[] data = Files.readAllBytes(path);
-			if(temp.delete()) {
-				//loggear
-			}
-			return data;
-		} catch (Exception e) {
-			throw new NegocioException("No se pudo realizar el proceso de Marshalling.");
+
+	public static byte[] convertirJSONAXML(ComprobanteElectronico doc) throws Exception {
+		String nombreArchivo = doc.getInfoTributaria().getClaveAcceso() + UUID.randomUUID().toString();
+		File temp = File.createTempFile(nombreArchivo, ".xml");
+		nombreArchivo = temp.getAbsolutePath();
+		MarshallerUtil.marshall(doc, nombreArchivo);
+		Path path = Paths.get(nombreArchivo);
+		byte[] data = Files.readAllBytes(path);
+		if (!temp.delete()) {
+			throw new Exception("No se pudo eliminar el archivo temporal.");
 		}
-		
+		return data;
+
 	}
 
 	public static byte[] convertirArchivoAByteArray(File file) throws IOException {

@@ -1,18 +1,26 @@
 package com.rolandopalermo.facturacion.ec.web.controller;
 
+import java.io.File;
+
+import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rolandopalermo.facturacion.ec.bo.SriBO;
+import com.rolandopalermo.facturacion.ec.common.exception.BadRequestException;
+import com.rolandopalermo.facturacion.ec.common.exception.InternalServerException;
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
+import com.rolandopalermo.facturacion.ec.common.exception.ResourceNotFoundException;
 import com.rolandopalermo.facturacion.ec.dto.AutorizacionRequestDTO;
-import com.rolandopalermo.facturacion.ec.dto.GeneradorRequestDTO;
-import com.rolandopalermo.facturacion.ec.dto.GenericResponseDTO;
 import com.rolandopalermo.facturacion.ec.dto.RecepcionRequestDTO;
 import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 import com.rolandopalermo.facturacion.ec.modelo.factura.Factura;
@@ -26,92 +34,99 @@ import recepcion.ws.sri.gob.ec.RespuestaSolicitud;
 
 @RestController
 @RequestMapping(value = "/sri")
-public class SriController {
+public class SRIController {
+
+	private static final Logger logger = Logger.getLogger(SRIController.class);
 
 	@Autowired
 	private SriBO sriBO;
 
+	@Value("${pkcs12.certificado.ruta}")
+	private String rutaArchivoPkcs12;
+
+	@Value("${pkcs12.certificado.clave}")
+	private String claveArchivopkcs12;
+
+	@Value("${sri.wsdl.recepcion}")
+	private String wsdlRecepcion;
+
+	@Value("${sri.wsdl.autorizacion}")
+	private String wsdlAutorizacion;
+
 	@RequestMapping(value = "/enviar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaSolicitud> enviarComprobante(@RequestBody RecepcionRequestDTO request) {
-		GenericResponseDTO<RespuestaSolicitud> response = new GenericResponseDTO<RespuestaSolicitud>();
-		try {
-			response.setCodigo("0");
-			response.setContenido(sriBO.enviarComprobante(request.getContenidoXML()));
-		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
+	public ResponseEntity<RespuestaSolicitud> enviarComprobante(@RequestBody RecepcionRequestDTO request) {
+		if (!new File(rutaArchivoPkcs12).exists()) {
+			throw new ResourceNotFoundException("No se pudo encontrar el certificado de firma digital.");
 		}
-		return response;
+		try {
+			return new ResponseEntity<RespuestaSolicitud>(
+					sriBO.enviarComprobante(request.getContenido(), wsdlRecepcion), HttpStatus.OK);
+		} catch (NegocioException e) {
+			logger.error("enviarComprobante", e);
+			throw new BadRequestException(e.getMessage());
+		} catch (Exception e) {
+			logger.error("enviarComprobante", e);
+			throw new InternalServerException(e.getMessage());
+		}
 	}
 
 	@RequestMapping(value = "/autorizar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaComprobante> autorizarComprobante(@RequestBody AutorizacionRequestDTO request) {
-		GenericResponseDTO<RespuestaComprobante> response = new GenericResponseDTO<RespuestaComprobante>();
+	public ResponseEntity<RespuestaComprobante> autorizarComprobante(@RequestBody AutorizacionRequestDTO request) {
 		try {
-			response.setCodigo("0");
-			response.setContenido(sriBO.autorizarComprobante(request.getClaveAcceso()));
+			return new ResponseEntity<RespuestaComprobante>(
+					sriBO.autorizarComprobante(request.getClaveAcceso(), wsdlAutorizacion), HttpStatus.OK);
 		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
+			logger.error("autorizarComprobante", e);
+			throw new BadRequestException(e.getMessage());
+		} catch (Exception e) {
+			logger.error("autorizarComprobante", e);
+			throw new InternalServerException(e.getMessage());
 		}
-		return response;
 	}
 
 	@RequestMapping(value = "/emitir/factura", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaComprobante> emitirFactura(@RequestBody GeneradorRequestDTO<Factura> request) {
-		return emitirDocumentoElectronico(request.getComprobante());
+	public ResponseEntity<RespuestaComprobante> emitirFactura(@Valid @RequestBody Factura request) {
+		return emitirDocumentoElectronico(request);
 	}
 
 	@RequestMapping(value = "/emitir/guia-remision", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaComprobante> emitirGuiaRemision(
-			@RequestBody GeneradorRequestDTO<GuiaRemision> request) {
-		return emitirDocumentoElectronico(request.getComprobante());
+	public ResponseEntity<RespuestaComprobante> emitirGuiaRemision(@Valid @RequestBody GuiaRemision request) {
+		return emitirDocumentoElectronico(request);
 	}
 
 	@RequestMapping(value = "/emitir/nota-credito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaComprobante> emitirNotaCredito(
-			@RequestBody GeneradorRequestDTO<NotaCredito> request) {
-		return emitirDocumentoElectronico(request.getComprobante());
+	public ResponseEntity<RespuestaComprobante> emitirNotaCredito(@Valid @RequestBody NotaCredito request) {
+		return emitirDocumentoElectronico(request);
 	}
 
 	@RequestMapping(value = "/emitir/nota-debito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaComprobante> emitirNotaDebito(
-			@RequestBody GeneradorRequestDTO<NotaDebito> request) {
-		return emitirDocumentoElectronico(request.getComprobante());
+	public ResponseEntity<RespuestaComprobante> emitirNotaDebito(@Valid @RequestBody NotaDebito request) {
+		return emitirDocumentoElectronico(request);
 	}
 
 	@RequestMapping(value = "/emitir/comprobante-retencion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public GenericResponseDTO<RespuestaComprobante> emitirComprobanteRetencion(
-			@RequestBody GeneradorRequestDTO<ComprobanteRetencion> request) {
-		return emitirDocumentoElectronico(request.getComprobante());
+	public ResponseEntity<RespuestaComprobante> emitirComprobanteRetencion(
+			@Valid @RequestBody ComprobanteRetencion request) {
+		return emitirDocumentoElectronico(request);
 	}
 
-	private GenericResponseDTO<RespuestaComprobante> emitirDocumentoElectronico(ComprobanteElectronico request) {
-		GenericResponseDTO<RespuestaComprobante> response = new GenericResponseDTO<RespuestaComprobante>();
+	private ResponseEntity<RespuestaComprobante> emitirDocumentoElectronico(ComprobanteElectronico request) {
 		try {
-			response.setCodigo("0");
-			response.setContenido(sriBO.emitirComprobante(request));
+			return new ResponseEntity<RespuestaComprobante>(
+					sriBO.emitirComprobante(
+							request, 
+							rutaArchivoPkcs12,
+							claveArchivopkcs12, 
+							wsdlRecepcion, wsdlAutorizacion
+							)
+					, HttpStatus.OK);
 		} catch (NegocioException e) {
-			response.setCodigo("99");
-			response.setMensaje(e.getMessage());
-		} catch (Exception ex) {
-			response.setCodigo("500");
-			response.setMensaje("Ocurrió un error interno");
+			logger.error("emitirDocumentoElectronico", e);
+			throw new BadRequestException(e.getMessage());
+		} catch (Exception e) {
+			logger.error("emitirDocumentoElectronico", e);
+			throw new InternalServerException(e.getMessage());
 		}
-		return response;
 	}
 
 }

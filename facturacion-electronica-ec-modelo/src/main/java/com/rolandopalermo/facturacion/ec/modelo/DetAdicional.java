@@ -6,6 +6,8 @@ package com.rolandopalermo.facturacion.ec.modelo;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +19,9 @@ import lombok.Setter;
 @Setter
 public class DetAdicional {
 
+	@NotEmpty
 	protected String nombre;
+	@NotEmpty
 	protected String valor;
 
 	@XmlAttribute(name = "nombre")

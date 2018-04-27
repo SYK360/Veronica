@@ -7,9 +7,12 @@ package com.rolandopalermo.facturacion.ec.modelo.factura;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.rolandopalermo.facturacion.ec.modelo.DetAdicional;
 import com.rolandopalermo.facturacion.ec.modelo.Impuesto;
@@ -30,12 +33,15 @@ public class FacturaDetalle {
 
 	protected String codigoPrincipal;
 	protected String codigoAuxiliar;
+	@NotEmpty
 	protected String descripcion;
 	protected BigDecimal cantidad;
 	protected BigDecimal precioUnitario;
 	protected BigDecimal descuento;
 	protected BigDecimal precioTotalSinImpuesto;
 	private List<DetAdicional> detAdicional;
+	@NotEmpty
+	@Valid
 	private List<Impuesto> impuesto;
 
 	@XmlElementWrapper(name = "detallesAdicionales")

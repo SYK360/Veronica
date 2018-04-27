@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class FirmadorRequestDTO {
 	
-	private byte[] contenidoXML;
+	private byte[] contenido;
 	
 }

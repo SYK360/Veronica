@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 
 import javax.xml.bind.annotation.XmlType;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +22,9 @@ import lombok.Setter;
 @XmlType(propOrder = { "codigo", "codigoPorcentaje", "tarifa", "baseImponible", "valor" })
 public class Impuesto {
 
+	@NotEmpty
 	protected String codigo;
+	@NotEmpty
 	protected String codigoPorcentaje;
 	protected BigDecimal tarifa;
 	protected BigDecimal baseImponible;

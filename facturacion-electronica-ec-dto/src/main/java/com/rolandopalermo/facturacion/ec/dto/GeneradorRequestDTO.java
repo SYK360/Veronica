@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class GeneradorRequestDTO<T> {
 
-	private T comprobante;
+	private T contenido;
 
 }
