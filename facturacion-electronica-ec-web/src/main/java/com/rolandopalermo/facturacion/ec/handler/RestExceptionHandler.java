@@ -1,82 +1,224 @@
 package com.rolandopalermo.facturacion.ec.handler;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.rolandopalermo.facturacion.ec.common.exception.BadRequestException;
 import com.rolandopalermo.facturacion.ec.common.exception.InternalServerException;
 import com.rolandopalermo.facturacion.ec.common.exception.ResourceNotFoundException;
-import com.rolandopalermo.facturacion.ec.dto.error.ErrorDetailDTO;
-import com.rolandopalermo.facturacion.ec.dto.error.ValidationErrorDTO;
 
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class RestExceptionHandler {
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+	private static final Logger logger = Logger.getLogger(RestExceptionHandler.class);
+	
+	/**
+	 * 
+	 * @param ex
+	 * @param request
+	 * @return
+	 */
 	@ExceptionHandler({ ResourceNotFoundException.class })
 	public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
-		return new ResponseEntity<>(makeErrorDetail(ex, HttpStatus.NOT_FOUND, "Error interno"), null,
-				HttpStatus.NOT_FOUND);
+		return buildResponseEntity(new ApiError(NOT_FOUND, ex.getMessage(), ex));
 	}
-
+	
+	/**
+	 * 
+	 * @param ex
+	 * @param request
+	 * @return
+	 */
 	@ExceptionHandler({ InternalServerException.class })
 	public ResponseEntity<?> handleInternalServerException(InternalServerException ex, HttpServletRequest request) {
-		return new ResponseEntity<>(makeErrorDetail(ex, HttpStatus.INTERNAL_SERVER_ERROR, "Error interno"), null,
-				HttpStatus.INTERNAL_SERVER_ERROR);
+		return buildResponseEntity(new ApiError(INTERNAL_SERVER_ERROR, ex.getMessage(), ex));
 	}
+	
+    /**
+     * Handle MissingServletRequestParameterException. Triggered when a 'required' request parameter is missing.
+     *
+     * @param ex      MissingServletRequestParameterException
+     * @param headers HttpHeaders
+     * @param status  HttpStatus
+     * @param request WebRequest
+     * @return the ApiError object
+     */
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(
+            MissingServletRequestParameterException ex, HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+        String error = ex.getParameterName() + " parameter is missing";
+        return buildResponseEntity(new ApiError(BAD_REQUEST, error, ex));
+    }
 
-	@ExceptionHandler(BadRequestException.class)
-	public ResponseEntity<?> handleBadRequestException(BadRequestException ex, HttpServletRequest request) {
-		return new ResponseEntity<>(
-				makeErrorDetail(ex, HttpStatus.BAD_REQUEST, "Error al ejecutar la petición"), null,
-				HttpStatus.BAD_REQUEST);
-	}
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<?> handleValidationError(MethodArgumentNotValidException manve, HttpServletRequest request) {
-		ErrorDetailDTO errorDetail = new ErrorDetailDTO();
-		// Populate errorDetail instance
-		errorDetail.setTimeStamp(new Date().getTime());
-		errorDetail.setStatus(HttpStatus.BAD_REQUEST.value());
-		String requestPath = (String) request.getAttribute("javax.servlet.error.request_uri");
-		if (requestPath == null) {
-			requestPath = request.getRequestURI();
-		}
-		errorDetail.setTitle("Error de validación");
-		errorDetail.setDetail("La petición no contiene toda la información requerida.");
-		errorDetail.setDeveloperMessage(manve.getClass().getName());
-		// Create ValidationError instances
-		List<FieldError> fieldErrors = manve.getBindingResult().getFieldErrors();
-		for (FieldError fe : fieldErrors) {
-			List<ValidationErrorDTO> validationErrorList = errorDetail.getErrors().get(fe.getField());
-			if (validationErrorList == null) {
-				validationErrorList = new ArrayList<ValidationErrorDTO>();
-				errorDetail.getErrors().put(fe.getField(), validationErrorList);
-			}
-			ValidationErrorDTO validationError = new ValidationErrorDTO();
-			validationError.setCode(fe.getCode());
-			validationError.setMessage(fe.getDefaultMessage());
-			validationErrorList.add(validationError);
-		}
-		return new ResponseEntity<>(errorDetail, null, HttpStatus.BAD_REQUEST);
-	}
+    /**
+     * Handle HttpMediaTypeNotSupportedException. This one triggers when JSON is invalid as well.
+     *
+     * @param ex      HttpMediaTypeNotSupportedException
+     * @param headers HttpHeaders
+     * @param status  HttpStatus
+     * @param request WebRequest
+     * @return the ApiError object
+     */
+    @Override
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(
+            HttpMediaTypeNotSupportedException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ex.getContentType());
+        builder.append(" media type is not supported. Supported media types are ");
+        ex.getSupportedMediaTypes().forEach(t -> builder.append(t).append(", "));
+        return buildResponseEntity(new ApiError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, builder.substring(0, builder.length() - 2), ex));
+    }
 
-	private ErrorDetailDTO makeErrorDetail(Exception ex, HttpStatus httpStatus, String title) {
-		ErrorDetailDTO errorDetail = new ErrorDetailDTO();
-		errorDetail.setTimeStamp(new Date().getTime());
-		errorDetail.setStatus(httpStatus.value());
-		errorDetail.setTitle(title);
-		errorDetail.setDetail(ex.getMessage());
-		errorDetail.setDeveloperMessage(ex.getClass().getName());
-		return errorDetail;
-	}
+    /**
+     * Handle MethodArgumentNotValidException. Triggered when an object fails @Valid validation.
+     *
+     * @param ex      the MethodArgumentNotValidException that is thrown when @Valid validation fails
+     * @param headers HttpHeaders
+     * @param status  HttpStatus
+     * @param request WebRequest
+     * @return the ApiError object
+     */
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage("Validation error");
+        apiError.addValidationErrors(ex.getBindingResult().getFieldErrors());
+        apiError.addValidationError(ex.getBindingResult().getGlobalErrors());
+        return buildResponseEntity(apiError);
+    }
+
+    /**
+     * Handles javax.validation.ConstraintViolationException. Thrown when @Validated fails.
+     *
+     * @param ex the ConstraintViolationException
+     * @return the ApiError object
+     */
+    @ExceptionHandler(javax.validation.ConstraintViolationException.class)
+    protected ResponseEntity<Object> handleConstraintViolation(
+            javax.validation.ConstraintViolationException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage("Validation error");
+        apiError.addValidationErrors(ex.getConstraintViolations());
+        return buildResponseEntity(apiError);
+    }
+
+//    /**
+//     * Handles EntityNotFoundException. Created to encapsulate errors with more detail than javax.persistence.EntityNotFoundException.
+//     *
+//     * @param ex the EntityNotFoundException
+//     * @return the ApiError object
+//     */
+//    @ExceptionHandler(EntityNotFoundException.class)
+//    protected ResponseEntity<Object> handleEntityNotFound(
+//            EntityNotFoundException ex) {
+//        ApiError apiError = new ApiError(NOT_FOUND);
+//        apiError.setMessage(ex.getMessage());
+//        return buildResponseEntity(apiError);
+//    }
+
+    /**
+     * Handle HttpMessageNotReadableException. Happens when request JSON is malformed.
+     *
+     * @param ex      HttpMessageNotReadableException
+     * @param headers HttpHeaders
+     * @param status  HttpStatus
+     * @param request WebRequest
+     * @return the ApiError object
+     */
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ServletWebRequest servletWebRequest = (ServletWebRequest) request;
+        logger.info(String.format("{} to {}", servletWebRequest.getHttpMethod(), servletWebRequest.getRequest().getServletPath()));
+        String error = "Malformed JSON request";
+        return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
+    }
+
+    /**
+     * Handle HttpMessageNotWritableException.
+     *
+     * @param ex      HttpMessageNotWritableException
+     * @param headers HttpHeaders
+     * @param status  HttpStatus
+     * @param request WebRequest
+     * @return the ApiError object
+     */
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String error = "Error writing JSON output";
+        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
+    }
+
+    /**
+     * Handle javax.persistence.EntityNotFoundException
+     */
+    @ExceptionHandler(javax.persistence.EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFound(javax.persistence.EntityNotFoundException ex) {
+        return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex));
+    }
+
+//    /**
+//     * Handle DataIntegrityViolationException, inspects the cause for different DB causes.
+//     *
+//     * @param ex the DataIntegrityViolationException
+//     * @return the ApiError object
+//     */
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    protected ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex,
+//                                                                  WebRequest request) {
+//        if (ex.getCause() instanceof ConstraintViolationException) {
+//            return buildResponseEntity(new ApiError(HttpStatus.CONFLICT, "Database error", ex.getCause()));
+//        }
+//        return buildResponseEntity(new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex));
+//    }
+
+    /**
+     * Handle Exception, handle generic Exception.class
+     *
+     * @param ex the Exception
+     * @return the ApiError object
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    protected ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
+                                                                      WebRequest request) {
+        ApiError apiError = new ApiError(BAD_REQUEST);
+        apiError.setMessage(String.format("The parameter '%s' of value '%s' could not be converted to type '%s'", ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName()));
+        apiError.setDebugMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+
+    private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
 }
