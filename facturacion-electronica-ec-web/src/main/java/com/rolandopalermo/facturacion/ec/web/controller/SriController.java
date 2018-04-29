@@ -34,7 +34,7 @@ import io.swagger.annotations.Api;
 import recepcion.ws.sri.gob.ec.RespuestaSolicitud;
 
 @RestController
-@RequestMapping(value = "/sri")
+@RequestMapping(value = "/api/v1/sri")
 @Api(description = "Permite enviar o autorizar un comprobante electrónico.")
 public class SRIController {
 

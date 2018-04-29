@@ -24,7 +24,7 @@ import com.rolandopalermo.facturacion.ec.dto.GenericResponse;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(value = "/firmar")
+@RequestMapping(value = "/api/v1/firmar")
 @Api(description = "Permite firmar un comprobante electrónico.")
 public class FirmaController {
 

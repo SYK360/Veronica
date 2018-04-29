@@ -27,7 +27,7 @@ import com.rolandopalermo.facturacion.ec.modelo.retencion.ComprobanteRetencion;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(value = "/generar")
+@RequestMapping(value = "/api/v1/generar")
 @Api(description = "Genera comprobante electrónico como XML.")
 public class GeneracionController {
 
