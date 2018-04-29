@@ -30,10 +30,12 @@ import com.rolandopalermo.facturacion.ec.modelo.notadebito.NotaDebito;
 import com.rolandopalermo.facturacion.ec.modelo.retencion.ComprobanteRetencion;
 
 import autorizacion.ws.sri.gob.ec.RespuestaComprobante;
+import io.swagger.annotations.Api;
 import recepcion.ws.sri.gob.ec.RespuestaSolicitud;
 
 @RestController
 @RequestMapping(value = "/sri")
+@Api(description = "Permite enviar o autorizar un comprobante electrónico.")
 public class SRIController {
 
 	private static final Logger logger = Logger.getLogger(SRIController.class);

@@ -21,8 +21,11 @@ import com.rolandopalermo.facturacion.ec.common.exception.ResourceNotFoundExcept
 import com.rolandopalermo.facturacion.ec.dto.FirmadorRequestDTO;
 import com.rolandopalermo.facturacion.ec.dto.GenericResponse;
 
+import io.swagger.annotations.Api;
+
 @RestController
 @RequestMapping(value = "/firmar")
+@Api(description = "Permite firmar un comprobante electrónico.")
 public class FirmaController {
 
 	private static final Logger logger = Logger.getLogger(FirmaController.class);
