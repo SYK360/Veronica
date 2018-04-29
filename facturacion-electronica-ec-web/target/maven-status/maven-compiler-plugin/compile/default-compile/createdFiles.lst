@@ -1,10 +1,10 @@
 com\rolandopalermo\facturacion\ec\handler\RestExceptionHandler.class
-com\rolandopalermo\facturacion\ec\web\controller\SRIController.class
 com\rolandopalermo\facturacion\ec\web\controller\GeneracionController.class
-com\rolandopalermo\facturacion\ec\web\FactElectApplication.class
 com\rolandopalermo\facturacion\ec\config\SwaggerConfig.class
 com\rolandopalermo\facturacion\ec\handler\ApiError$ApiSubError.class
-com\rolandopalermo\facturacion\ec\handler\LowerCaseClassNameResolver.class
 com\rolandopalermo\facturacion\ec\web\controller\FirmaController.class
-com\rolandopalermo\facturacion\ec\handler\ApiError$ApiValidationError.class
 com\rolandopalermo\facturacion\ec\handler\ApiError.class
+com\rolandopalermo\facturacion\ec\web\controller\SRIController.class
+com\rolandopalermo\facturacion\ec\web\FactElectApplication.class
+com\rolandopalermo\facturacion\ec\handler\LowerCaseClassNameResolver.class
+com\rolandopalermo\facturacion\ec\handler\ApiError$ApiValidationError.class
