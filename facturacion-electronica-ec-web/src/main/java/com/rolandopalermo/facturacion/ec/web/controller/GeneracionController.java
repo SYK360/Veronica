@@ -7,16 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rolandopalermo.facturacion.ec.bo.GeneradorBO;
 import com.rolandopalermo.facturacion.ec.common.exception.BadRequestException;
 import com.rolandopalermo.facturacion.ec.common.exception.InternalServerException;
 import com.rolandopalermo.facturacion.ec.common.exception.NegocioException;
-import com.rolandopalermo.facturacion.ec.dto.GeneradorRequestDTO;
 import com.rolandopalermo.facturacion.ec.dto.GenericResponse;
 import com.rolandopalermo.facturacion.ec.modelo.ComprobanteElectronico;
 import com.rolandopalermo.facturacion.ec.modelo.factura.Factura;
@@ -34,34 +33,30 @@ public class GeneracionController {
 	@Autowired
 	private GeneradorBO generadorBO;
 
-	@RequestMapping(value = "/factura", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarFactura(
-			@Valid @RequestBody Factura request) {
+	@PostMapping(value = "/factura", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenericResponse<byte[]>> generarFactura(@Valid @RequestBody Factura request) {
 		return generarDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/guia-remision", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarGuiaRemision(
-			@Valid @RequestBody GeneradorRequestDTO<GuiaRemision> request) {
-		return generarDocumentoElectronico(request.getContenido());
+	@PostMapping(value = "/guia-remision", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenericResponse<byte[]>> generarGuiaRemision(@Valid @RequestBody GuiaRemision request) {
+		return generarDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/nota-credito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarNotaCredito(
-			@Valid @RequestBody GeneradorRequestDTO<NotaCredito> request) {
-		return generarDocumentoElectronico(request.getContenido());
+	@PostMapping(value = "/nota-credito", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenericResponse<byte[]>> generarNotaCredito(@Valid @RequestBody NotaCredito request) {
+		return generarDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/nota-debito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarNotaDebito(
-			@Valid @RequestBody GeneradorRequestDTO<NotaDebito> request) {
-		return generarDocumentoElectronico(request.getContenido());
+	@PostMapping(value = "/nota-debito", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GenericResponse<byte[]>> generarNotaDebito(@Valid @RequestBody NotaDebito request) {
+		return generarDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/comprobante-retencion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/comprobante-retencion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenericResponse<byte[]>> generarComprobanteRetencion(
-			@Valid @RequestBody GeneradorRequestDTO<ComprobanteRetencion> request) {
-		return generarDocumentoElectronico(request.getContenido());
+			@Valid @RequestBody ComprobanteRetencion request) {
+		return generarDocumentoElectronico(request);
 	}
 
 	private ResponseEntity<GenericResponse<byte[]>> generarDocumentoElectronico(ComprobanteElectronico request) {

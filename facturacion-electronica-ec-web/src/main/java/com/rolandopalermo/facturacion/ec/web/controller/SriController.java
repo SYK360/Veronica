@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rolandopalermo.facturacion.ec.bo.SriBO;
@@ -53,7 +53,7 @@ public class SRIController {
 	@Value("${sri.wsdl.autorizacion}")
 	private String wsdlAutorizacion;
 
-	@RequestMapping(value = "/enviar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/enviar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaSolicitud> enviarComprobante(@RequestBody RecepcionRequestDTO request) {
 		if (!new File(rutaArchivoPkcs12).exists()) {
 			throw new ResourceNotFoundException("No se pudo encontrar el certificado de firma digital.");
@@ -70,7 +70,7 @@ public class SRIController {
 		}
 	}
 
-	@RequestMapping(value = "/autorizar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/autorizar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> autorizarComprobante(@RequestBody AutorizacionRequestDTO request) {
 		try {
 			return new ResponseEntity<RespuestaComprobante>(
@@ -84,27 +84,27 @@ public class SRIController {
 		}
 	}
 
-	@RequestMapping(value = "/emitir/factura", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/emitir/factura", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> emitirFactura(@Valid @RequestBody Factura request) {
 		return emitirDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/emitir/guia-remision", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/emitir/guia-remision", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> emitirGuiaRemision(@Valid @RequestBody GuiaRemision request) {
 		return emitirDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/emitir/nota-credito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/emitir/nota-credito", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> emitirNotaCredito(@Valid @RequestBody NotaCredito request) {
 		return emitirDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/emitir/nota-debito", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/emitir/nota-debito", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> emitirNotaDebito(@Valid @RequestBody NotaDebito request) {
 		return emitirDocumentoElectronico(request);
 	}
 
-	@RequestMapping(value = "/emitir/comprobante-retencion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/emitir/comprobante-retencion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> emitirComprobanteRetencion(
 			@Valid @RequestBody ComprobanteRetencion request) {
 		return emitirDocumentoElectronico(request);
@@ -112,14 +112,8 @@ public class SRIController {
 
 	private ResponseEntity<RespuestaComprobante> emitirDocumentoElectronico(ComprobanteElectronico request) {
 		try {
-			return new ResponseEntity<RespuestaComprobante>(
-					sriBO.emitirComprobante(
-							request, 
-							rutaArchivoPkcs12,
-							claveArchivopkcs12, 
-							wsdlRecepcion, wsdlAutorizacion
-							)
-					, HttpStatus.OK);
+			return new ResponseEntity<RespuestaComprobante>(sriBO.emitirComprobante(request, rutaArchivoPkcs12,
+					claveArchivopkcs12, wsdlRecepcion, wsdlAutorizacion), HttpStatus.OK);
 		} catch (NegocioException e) {
 			logger.error("emitirDocumentoElectronico", e);
 			throw new BadRequestException(e.getMessage());

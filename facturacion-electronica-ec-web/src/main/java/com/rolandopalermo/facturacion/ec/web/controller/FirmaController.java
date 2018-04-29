@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rolandopalermo.facturacion.ec.bo.FirmadorBO;
@@ -36,7 +36,7 @@ public class FirmaController {
 	@Value("${pkcs12.certificado.clave}")
 	private String claveArchivopkcs12;
 
-	@RequestMapping(value = "/comprobante-electronico", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/comprobante-electronico", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenericResponse<byte[]>> firmarComprobanteElectronico(
 			@RequestBody FirmadorRequestDTO request) {
 		if (!new File(rutaArchivoPkcs12).exists()) {
