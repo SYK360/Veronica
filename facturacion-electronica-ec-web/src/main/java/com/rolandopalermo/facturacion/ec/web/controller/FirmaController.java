@@ -22,6 +22,8 @@ import com.rolandopalermo.facturacion.ec.dto.FirmadorRequestDTO;
 import com.rolandopalermo.facturacion.ec.dto.GenericResponse;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(value = "/api/v1/firmar")
@@ -39,8 +41,10 @@ public class FirmaController {
 	@Value("${pkcs12.certificado.clave}")
 	private String claveArchivopkcs12;
 
+	@ApiOperation(value = "Firma un comprobante electrónico")
 	@PostMapping(value = "/comprobante-electronico", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenericResponse<byte[]>> firmarComprobanteElectronico(
+			@ApiParam(value = "Comprobante electrónico codificado como base64", required = true) 
 			@RequestBody FirmadorRequestDTO request) {
 		if (!new File(rutaArchivoPkcs12).exists()) {
 			throw new ResourceNotFoundException("No se pudo encontrar el certificado de firma digital.");
@@ -57,6 +61,5 @@ public class FirmaController {
 			throw new InternalServerException(e.getMessage());
 		}
 	}
-	
 
 }

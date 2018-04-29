@@ -16,10 +16,11 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket v1APIConfiguration() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("v1").select()
+		return new Docket(
+				DocumentationType.SWAGGER_2).groupName("v1").select()
 				.apis(RequestHandlerSelectors.basePackage("com.rolandopalermo.facturacion.ec.web.controller"))
 				.paths(PathSelectors.regex("/api/v1.*")).build().apiInfo(new ApiInfoBuilder().version("1.0")
-						.title("Person API").description("Documentation Veronica API v1.0").build());
+						.title("Veronica API").description("Documentation Veronica API v1.0").build());
 	}
 
 }

@@ -25,6 +25,10 @@ import com.rolandopalermo.facturacion.ec.modelo.notadebito.NotaDebito;
 import com.rolandopalermo.facturacion.ec.modelo.retencion.ComprobanteRetencion;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+import static com.rolandopalermo.facturacion.ec.common.util.Constantes.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/generar")
@@ -36,29 +40,48 @@ public class GeneracionController {
 	@Autowired
 	private GeneradorBO generadorBO;
 
+	@ApiOperation(value = "Genera una factura en formato XML")
 	@PostMapping(value = "/factura", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarFactura(@Valid @RequestBody Factura request) {
+	public ResponseEntity<GenericResponse<byte[]>> generarFactura(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody Factura request) {
 		return generarDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera una guía de remisión en formato XML")
 	@PostMapping(value = "/guia-remision", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarGuiaRemision(@Valid @RequestBody GuiaRemision request) {
+	public ResponseEntity<GenericResponse<byte[]>> generarGuiaRemision(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody GuiaRemision request) {
 		return generarDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera una nota de crédito en formato XML")
 	@PostMapping(value = "/nota-credito", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarNotaCredito(@Valid @RequestBody NotaCredito request) {
+	public ResponseEntity<GenericResponse<byte[]>> generarNotaCredito(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody NotaCredito request) {
 		return generarDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera una nota de débito en formato XML")
 	@PostMapping(value = "/nota-debito", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GenericResponse<byte[]>> generarNotaDebito(@Valid @RequestBody NotaDebito request) {
+	public ResponseEntity<GenericResponse<byte[]>> generarNotaDebito(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody NotaDebito request) {
 		return generarDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera un comprobante de retención en formato XML")
 	@PostMapping(value = "/comprobante-retencion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<GenericResponse<byte[]>> generarComprobanteRetencion(
-			@Valid @RequestBody ComprobanteRetencion request) {
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody ComprobanteRetencion request) {
 		return generarDocumentoElectronico(request);
 	}
 

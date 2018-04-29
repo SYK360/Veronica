@@ -1,5 +1,7 @@
 package com.rolandopalermo.facturacion.ec.web.controller;
 
+import static com.rolandopalermo.facturacion.ec.common.util.Constantes.API_DOC_ANEXO_1;
+
 import java.io.File;
 
 import javax.validation.Valid;
@@ -31,6 +33,8 @@ import com.rolandopalermo.facturacion.ec.modelo.retencion.ComprobanteRetencion;
 
 import autorizacion.ws.sri.gob.ec.RespuestaComprobante;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import recepcion.ws.sri.gob.ec.RespuestaSolicitud;
 
 @RestController
@@ -55,8 +59,11 @@ public class SRIController {
 	@Value("${sri.wsdl.autorizacion}")
 	private String wsdlAutorizacion;
 
+	@ApiOperation(value = "Envía un comprobante electrónico a validar al SRI")
 	@PostMapping(value = "/enviar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RespuestaSolicitud> enviarComprobante(@RequestBody RecepcionRequestDTO request) {
+	public ResponseEntity<RespuestaSolicitud> enviarComprobante(
+			@ApiParam(value = "Comprobante electrónico codificado como base64", required = true) 
+			@RequestBody RecepcionRequestDTO request) {
 		if (!new File(rutaArchivoPkcs12).exists()) {
 			throw new ResourceNotFoundException("No se pudo encontrar el certificado de firma digital.");
 		}
@@ -72,8 +79,11 @@ public class SRIController {
 		}
 	}
 
+	@ApiOperation(value = "Solicita la validación de una clave de acceso")
 	@PostMapping(value = "/autorizar", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RespuestaComprobante> autorizarComprobante(@RequestBody AutorizacionRequestDTO request) {
+	public ResponseEntity<RespuestaComprobante> autorizarComprobante(
+			@ApiParam(value = "Clave de acceso del comprobante electrónico", required = true) 
+			@RequestBody AutorizacionRequestDTO request) {
 		try {
 			return new ResponseEntity<RespuestaComprobante>(
 					sriBO.autorizarComprobante(request.getClaveAcceso(), wsdlAutorizacion), HttpStatus.OK);
@@ -86,29 +96,48 @@ public class SRIController {
 		}
 	}
 
+	@ApiOperation(value = "Genera, firma, envía y autoriza una factura electrónica")
 	@PostMapping(value = "/emitir/factura", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RespuestaComprobante> emitirFactura(@Valid @RequestBody Factura request) {
+	public ResponseEntity<RespuestaComprobante> emitirFactura(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody Factura request) {
 		return emitirDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera, firma, envía y autoriza una  guía de remisión")
 	@PostMapping(value = "/emitir/guia-remision", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RespuestaComprobante> emitirGuiaRemision(@Valid @RequestBody GuiaRemision request) {
+	public ResponseEntity<RespuestaComprobante> emitirGuiaRemision(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody GuiaRemision request) {
 		return emitirDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera, firma, envía y autoriza una nota de crédito")
 	@PostMapping(value = "/emitir/nota-credito", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RespuestaComprobante> emitirNotaCredito(@Valid @RequestBody NotaCredito request) {
+	public ResponseEntity<RespuestaComprobante> emitirNotaCredito(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody NotaCredito request) {
 		return emitirDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera, firma, envía y autoriza una nota de débito")
 	@PostMapping(value = "/emitir/nota-debito", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<RespuestaComprobante> emitirNotaDebito(@Valid @RequestBody NotaDebito request) {
+	public ResponseEntity<RespuestaComprobante> emitirNotaDebito(
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody NotaDebito request) {
 		return emitirDocumentoElectronico(request);
 	}
 
+	@ApiOperation(value = "Genera, firma, envía y autoriza un comprobante de retención")
 	@PostMapping(value = "/emitir/comprobante-retencion", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RespuestaComprobante> emitirComprobanteRetencion(
-			@Valid @RequestBody ComprobanteRetencion request) {
+			@Valid
+			@ApiParam(value = API_DOC_ANEXO_1, required = true) 
+			@RequestBody ComprobanteRetencion request) {
 		return emitirDocumentoElectronico(request);
 	}
 
